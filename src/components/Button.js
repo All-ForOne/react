@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.scss';
+import 'shared/App.scss';
 
 function Button({children}){
     return <button className="button">{children}</button>;
