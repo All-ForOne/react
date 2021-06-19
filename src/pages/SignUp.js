@@ -12,11 +12,8 @@ import { useHistory } from 'react-router-dom';
 import AuthenticationService from 'lib/AuthenticationService' 
 
 
-const SignUp = ({ login, handleDrawer }) => {
-  useEffect(() => {
-    handleDrawer()
-  });
-
+const SignUp = ({ login }) => {
+  
   const [hasSignUpFailed, setHasSignUpFailed] = useState(false);
   
   const [inputs, setInputs] = useState({
@@ -39,6 +36,7 @@ const SignUp = ({ login, handleDrawer }) => {
 
   const useStyles = makeStyles((theme) => ({
     paper: {
+      marginTop: theme.spacing(16),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

@@ -1,7 +1,17 @@
 import React,  {useState, useEffect } from "react";
 import customAxios from '../customAxios';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Profile = ({ user }) => {
+  const useStyles = makeStyles((theme) => ({
+    profile: {
+      flexGrow: '3',
+      textAlign: 'end'
+    },
+  }));
+
+  const classes = useStyles();
+
   const { email } = user || {};
       
   // IP주소 변수 선언
@@ -12,6 +22,7 @@ const Profile = ({ user }) => {
     setIp(data);
   }
 
+  
   // 첫번째 렌더링을 다 마친 후 실행합니다.
   useEffect(
     () => {
@@ -21,7 +32,7 @@ const Profile = ({ user }) => {
   );
     
   return (
-        <div>
+        <div className={classes.profile} >
         <h1>Profile</h1>
         <dt>Email</dt>
         <dd>{user}</dd>

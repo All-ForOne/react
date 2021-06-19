@@ -22,45 +22,23 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import { mainListItems, secondaryListItems } from 'components/Menu';
 import { useHistory } from "react-router-dom";
 
-const CustomDrawer = ({open, handleDrawer}) => {
+const CustomDrawer = () => {
 
-    const drawerWidth = 240;
     const useStyles = makeStyles((theme) => ({
-        toolbarIcon: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: '0 8px',
-            ...theme.mixins.toolbar,
-          },
         drawerPaper: {
-            position: 'relative',
-            whiteSpace: 'nowrap',
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.enteringScreen,
-            }),
-          },
-          drawerPaperClose: {
-            overflowX: 'hidden',
-            transition: theme.transitions.create('width', {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.leavingScreen,
-            }),
-            width: theme.spacing(7),
-            [theme.breakpoints.up('sm')]: {
-              width: theme.spacing(9),
-            },
+            width: '100%',
+            paddingTop: '64px',
           },
     }));
 
     const history  = useHistory();
     const classes = useStyles();
 
+
+    
     const menuList = [
         {
-            text : "Home",
+            text : "Dashboard",
             icon : <DashboardIcon />,
             onClick : () => history.push("/")
             
@@ -70,22 +48,29 @@ const CustomDrawer = ({open, handleDrawer}) => {
             icon : <DashboardIcon />,
             onClick : () => history.push("/profile")
         },
+        {
+          text : "Calendar",
+          icon : <DashboardIcon />,
+          onClick : () => history.push("/calendar")
+      },
     ];
 
     return (
-        <div>
-            <Drawer
+          <div></div>
+
+    );
+};
+
+export default CustomDrawer;
+
+/**
+ * 
+ *  <Drawer
                 variant="permanent"
                 classes={{
-                  paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                  paper: classes.drawerPaper,
                 }}
-                open={open}
             >
-                <div className={classes.toolbarIcon}>
-                <IconButton onClick={handleDrawer}>
-                    <ChevronLeftIcon />
-                </IconButton>
-                </div>
                 <Divider />
                 <List>
                     {menuList.map((item, index) => {
@@ -97,30 +82,4 @@ const CustomDrawer = ({open, handleDrawer}) => {
                     })}
                 </List>
             </Drawer>
-        </div>
-
-    );
-};
-
-export default CustomDrawer;
-
-
-/**
-            <Drawer
-                variant="permanent"
-                classes={{
-                paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                <IconButton onClick={handleDrawerClose}>
-                    <ChevronLeftIcon />
-                </IconButton>
-                </div>
-                <Divider />
-                <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
-            </Drawer>
-*/
+ */
