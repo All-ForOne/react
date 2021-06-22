@@ -8,10 +8,8 @@ import Badge from '@material-ui/core/Badge';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useHistory } from "react-router-dom";
-import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const CustomAppBar = ({authenticated, logout}) => {
@@ -45,7 +43,6 @@ const CustomAppBar = ({authenticated, logout}) => {
     }
 
     return (
-    
         <AppBar position="absolute" className={classes.appBar}>
             <Toolbar className={classes.toolbar}>
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>

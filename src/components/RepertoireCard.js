@@ -6,7 +6,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
@@ -21,6 +20,7 @@ const useStyles = makeStyles({
   },
   media: {
     height: 140,
+    borderRadius: 6,
   },
 });
 
