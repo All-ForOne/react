@@ -1,2 +1,0 @@
-(this.webpackJsonpwork=this.webpackJsonpwork||[]).push([[12],{297:function(t,n,r){"use strict";r.r(n);var s=r(2);r(1);n.default=function(){return Object(s.jsx)("div",{children:"\ud648"})}}}]);
-//# sourceMappingURL=12.5635234c.chunk.js.map
