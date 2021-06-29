@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import Modal from '@material-ui/core/Modal';
 import RepertoireCard from 'components/RepertoireCard';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import RepertoireModal from 'pages/RepertoireModal'
 
 const currencies = [
     {
@@ -90,7 +92,7 @@ const currencies = [
     },
   ];
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
       width: 300,
     },
@@ -106,14 +108,43 @@ const useStyles = makeStyles({
     selectField: {
         width: 100,
     },
-  });
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: 'none',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
   
 const Repertoire = () => {
     const classes = useStyles();
     const [currency, setCurrency] = React.useState('EUR');
+    const [addList, setAddList] = React.useState([]);
+
+    useEffect(() => {
+      console.log(addList);
+      //팝업 닫히고 난 후 data 저장 및 화면에 추가하기
+    }, [addList]);
 
     const handleChange = (event) => {
         setCurrency(event.target.value);
+    };
+
+    const [open, setOpen] = React.useState(false);
+  
+    const handleOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
+    const onAddSubmit = (text) => {
+      setAddList(text);
+      featuredPosts.push(text);
     };
 
     return (
@@ -142,16 +173,24 @@ const Repertoire = () => {
                 </Grid>
                 <Grid item xs>
                   <Grid container justify="flex-end" alignItems="center">
-                    <Button variant="outlined" color="primary">
+                    <Button variant="outlined" color="primary" onClick={handleOpen}>
                       New
                     </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="simple-modal-title"
+                      aria-describedby="simple-modal-description"
+                    >
+                      <RepertoireModal close={handleClose} onSubmit={onAddSubmit}/>
+                    </Modal>
                   </Grid>
                 </Grid>
             </Grid>
             <Divider className={classes.mt25}/>
             <Grid container spacing={4} className={classes.mt25}>
                 {featuredPosts.map((repertoire) => (
-                    <RepertoireCard key={repertoire.repertoire_id} repertoire={repertoire} />
+                    <RepertoireCard key={repertoire.repertoire_id} repertoire={repertoire}/>
                 ))}
             </Grid>
         </div>

@@ -7,7 +7,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
 import TextInfoContent from '@mui-treasury/components/content/textInfo';
 import { useN04TextInfoContentStyles } from '@mui-treasury/styles/textInfoContent/n04';
 
@@ -21,6 +20,9 @@ const useStyles = makeStyles({
   media: {
     height: 140,
     borderRadius: 6,
+  },
+  hideMedia: {
+    display: 'none',
   },
 });
 
