@@ -1,13 +1,13 @@
-import customAxios from '../customAxios';
 import axios from 'axios'
 
 class AuthenticationService {
-    signUp(firstName, lastName, email, password){
+    signUp(firstName, lastName, email, password, nickName){
         return axios.post('http://localhost:8080/signUp', {
             firstName, 
             lastName, 
             email, 
-            password
+            password,
+            nickName
         });
     }
     // send username, password to the SERVER

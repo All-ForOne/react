@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -14,78 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import LinkIcon from '@material-ui/icons/Link';
 
-  const featuredPosts = [
-    {
-      id: 0,
-      title: 'Irlandaise',
-      date: 'Nov 12',
-      composer: 'Claude Bolling',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-    {
-      id: 1,
-      title: 'Irlandaise',
-      date: 'Nov 12',
-      composer: 'Claude Bolling',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-    {
-      id: 2,
-      title: 'Post title',
-      date: 'Nov 11',
-      composer: '',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.This is a wider card with supporting text below as a natural lead-in to additional content.This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-    {
-      id: 3,
-      title: 'Irlandaise',
-      date: 'Nov 12',
-      composer: 'Claude Bolling',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-    {
-      id: 4,
-      title: 'Irlandaise',
-      date: 'Nov 12',
-      composer: 'Claude Bolling',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-    {
-      id: 5,
-      title: 'Post title',
-      date: 'Nov 11',
-      composer: '',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.This is a wider card with supporting text below as a natural lead-in to additional content.This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-    {
-      id: 6,
-      title: 'Irlandaise',
-      date: 'Nov 12',
-      composer: 'Claude Bolling',
-      description:
-        'This is a wider card with supporting text below as a natural lead-in to additional content.',
-      image: 'https://source.unsplash.com/random',
-      imageText: 'Image Text',
-    },
-  ];
+import {getRepertoireList} from 'lib/api'
 
 function getModalStyle() {
   const top = 50;
@@ -126,8 +55,19 @@ const useStyles = makeStyles((theme) => ({
   
 const RepertoireModal = (props) => {
     const classes = useStyles();
-    
+    const [musicList, setMusicList] = React.useState([]);
     const handleClose = props.close;
+
+    useEffect(()=>{
+      console.log(props.user);
+      const loadRepertoireList = async () => {
+        const repertoireList = await getRepertoireList(props.user);
+        setMusicList(repertoireList);
+      };
+      
+      loadRepertoireList();
+
+    },[])  // includes empty dependency array
 
     const onFormSubmit = e => {
       e.preventDefault();
@@ -141,7 +81,7 @@ const RepertoireModal = (props) => {
 
     const handleToggle = (repertoire) => () => {
       function findCheckedMusic(element)  {
-        if(element.id === repertoire.id) return true;
+        if(element.seq === repertoire.seq) return true;
       }
 
       const currentIndex = checked != null ? checked.findIndex(findCheckedMusic) : -1;
@@ -163,7 +103,7 @@ const RepertoireModal = (props) => {
 
     const isChecked = (repertoire_id) => {
       if(checked != null)
-        return checked.findIndex((item)=> item.id == repertoire_id) !== -1;
+        return checked.findIndex((item)=> item.seq == repertoire_id) !== -1;
       return false;
     };
 
@@ -177,14 +117,14 @@ const RepertoireModal = (props) => {
         </Grid>
         <Divider className={classes.mt25}/>
         <List className={classes.root}>
-          {featuredPosts.map((repertoire) => {
-            const labelId = `checkbox-list-label-${repertoire.id}`;
+          {musicList.map((repertoire) => {
+            const labelId = `checkbox-list-label-${repertoire.seq}`;
             return (
-              <ListItem key={repertoire.id} role={undefined} dense button onClick={handleToggle(repertoire)}>
+              <ListItem key={repertoire.seq} role={undefined} dense button onClick={handleToggle(repertoire)}>
                 <ListItemIcon>
                   <Checkbox
                     edge="start"
-                    checked={isChecked(`${repertoire.id}`)}
+                    checked={isChecked(`${repertoire.seq}`)}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ 'aria-labelledby': labelId }}

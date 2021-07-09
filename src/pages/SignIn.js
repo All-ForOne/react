@@ -58,20 +58,21 @@ const SignIn = ({ authenticated, login, location}) => {
       history.push("/signUp");
     }
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [hasLoginFailed, setHasLoginFailed] = useState(false)
-  
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [hasLoginFailed, setHasLoginFailed] = useState(false);
+
     const handleClick = () => {
       try {
-        //login({ email, password })
-        console.log('click')
         AuthenticationService.executeJwtAuthenticationService(email, password)
         .then((response) => {
             console.log(response)
-            AuthenticationService.registerSuccessfulLoginForJwt(email,response.data.token)
-            login()
-            //history.push("/")     
+            //토큰 저장
+            AuthenticationService.registerSuccessfulLoginForJwt(email,response.data.data.user.token)
+            login(response.data.data.user.nickName)
+            if(location.state == null){
+              history.push("/"+response.data.data.user.nickName+"/overview");
+            }
         }).catch( (error) =>{
             setHasLoginFailed(true)
             console.log(error.response)

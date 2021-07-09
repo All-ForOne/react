@@ -4,9 +4,9 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+
 
 const Contents = ({ user, match, location, history }) => {
     const useStyles = makeStyles((theme) => ({
@@ -45,11 +45,12 @@ const Contents = ({ user, match, location, history }) => {
     /* view 관련 변수 선언 시작 */
     const classes = useStyles();
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState("/"+`${user}`+"/overview");
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
       console.log(newValue);
+      console.log(user);
       history.push(newValue);
     };
 
@@ -71,10 +72,10 @@ const Contents = ({ user, match, location, history }) => {
               indicatorColor="primary"
               textColor="primary"
           >
-              <Tab value="/" label="Overview" />
-              <Tab value="/repertoire" label="Repertoire" />            
-              <Tab value="/calendar" label="Calendar" />
-              <Tab value="/posts" label="Posts" />
+              <Tab value={"/"+`${user}`+"/overview"} label="Overview" />
+              <Tab value={"/"+`${user}`+"/repertoire"} label="Repertoire" />            
+              <Tab value={"/"+`${user}`+"/calendar"} label="Calendar" />
+              <Tab value={"/"+`${user}`+"/posts"} label="Posts" />
           </Tabs>
           </Grid>
         </Grid>
@@ -87,10 +88,10 @@ const Contents = ({ user, match, location, history }) => {
               <Grid item xs={6}>
                 <Container maxWidth="lg" className={classes.container}>              
                     <Switch>
-                        <Route path="/calendar" component={Calendar}/>
-                        <Route path="/posts" component={Posts}/>
-                        <Route path="/repertoire" component={Repertoire}/>
-                        <Route exact path="/" render={props => <Home {...props}/>}/>
+                        <Route path="/:nickname/calendar" component={Calendar}/>
+                        <Route path="/:nickname/posts" component={Posts}/>
+                        <Route path="/:nickname/repertoire" render={props => <Repertoire user={user} {...props}/>}/>
+                        <Route exact path="/:nickname/overview" render={props => <Home {...props}/>}/>
                     </Switch>
                 </Container>
               </Grid>
@@ -102,13 +103,3 @@ const Contents = ({ user, match, location, history }) => {
 };
 
 export default Contents;
-
-/**
- * 
- * <AuthRoute
-                authenticated={authenticated}
-                path="/profile"
-                render={props => <Profile user={user} {...props} />}
-                />
-
- */
